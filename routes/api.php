@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('transactions', 'TransactionController@index')->name('index');
+Route::group(['prefix' => 'transaction', 'as' => 'transaction.'], function (): void {
+    Route::post('pos', 'TransactionController@store')->name('pos');
+    Route::post('web', 'TransactionController@store')->name('web');
+    Route::post('mobile', 'TransactionController@store')->name('mobile');
 });
